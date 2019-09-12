@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Литвинов](https://up.htmlacademy.ru/javascript/18/user/1053277).
-* Наставник: `Неизвестно`.
+* Наставник: `Евгений Самойленко`(https://up.htmlacademy.ru/javascript/18/user/999539).
 
 ---
 
