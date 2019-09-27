@@ -34,9 +34,9 @@ var getRandomAdvert = function (avatarNumber) {
   randomAdvert.offer.guests = getRandomIntInclusive(1, 5);
   randomAdvert.offer.checkin = CHECKIN_TIMES[getRandomIntInclusive(0, CHECKIN_TIMES.length - 1)];
   randomAdvert.offer.checkout = CHECKOUT_TIMES[getRandomIntInclusive(0, CHECKOUT_TIMES.length - 1)];
-  randomAdvert.offer.features = FEATURES.slice(0, getRandomIntInclusive(1, FEATURES.length - 1));
+  randomAdvert.offer.features = FEATURES.slice(0, getRandomIntInclusive(1, FEATURES.length));
   randomAdvert.offer.description = DESCRIPTION.slice(0, getRandomIntInclusive(0, DESCRIPTION.length - 1));
-  randomAdvert.offer.photos = PHOTOS.slice(0, getRandomIntInclusive(1, PHOTOS.length - 1));
+  randomAdvert.offer.photos = PHOTOS.slice(0, getRandomIntInclusive(1, PHOTOS.length));
   randomAdvert.location.x = getRandomIntInclusive(0, MAP_OVERLAY_XSIZE - MAP_PIN_XSIZE);
   randomAdvert.location.y = getRandomIntInclusive(130, 630);
   randomAdvert.offer.address = '{{location.x}}, {{location.y}}'.replace('{{location.x}}, {{location.y}}', randomAdvert.location.x + ',' + ' ' + randomAdvert.location.y);
@@ -77,10 +77,20 @@ var renderAdvert = function (advert) {
   advertElement.querySelector('.popup__type').textContent = advert.offer.type;
   advertElement.querySelector('.popup__text--capacity').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей';
   advertElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
-  advertElement.querySelector('.popup__feature').textContent = advert.offer.features;
+  var mainFeatures = advertElement.querySelector('.popup__features');
+  var randomFeature = advertElement.querySelectorAll('.popup__feature');
+  for (var i = randomFeature.length; i > advert.offer.features.length; i--) {
+    mainFeatures.removeChild(randomFeature[i - 1]);
+  }
   advertElement.querySelector('.popup__description').textContent = advert.offer.description;
-  advertElement.querySelector('.popup__photo').src = advert.offer.photos[1];
-
+  advertElement.querySelector('.popup__photo').src = advert.offer.photos[0];
+  for (var j = 1; j < advert.offer.photos.length; j++) {
+    var mainPhotos = advertElement.querySelector('.popup__photos');
+    var randomPhoto = advertElement.querySelector('.popup__photo');
+    var randomPhotoClone = randomPhoto.cloneNode(true);
+    mainPhotos.appendChild(randomPhotoClone);
+    randomPhotoClone.src = advert.offer.photos[j];
+  }
   return advertElement;
 };
 
