@@ -16,6 +16,9 @@ var MAIN_PIN_YSIZE = 84;
 var MAIN_PIN_XCOORD = 570;
 var MAIN_PIN_YCOORD = 375;
 var ENTER_KEYCODE = 13;
+var NUMBER_OF_ROOMS = 100;
+var GUESTS_CAPACITY = 0;
+
 var getRandomIntInclusive = function (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -120,38 +123,37 @@ var mainPin = document.querySelector('.map__pin--main');
 var adressInput = document.querySelector('#address');
 var housingRoomsSelect = document.querySelector('#room_number');
 var housingGuestsSelect = document.querySelector('#capacity');
-// Бред который не получился --------------------------------
-var onChangeRoomClick = function (room, guests) {
-  room.addEventListener('change', function () {
-    for (var j = 0; j < guests.options.length; j++) {
-      if (room.options[i].selected) {
-        for (var k = 0; k < guests.options.length; k++) {
-          if (Number(room.options[j].value) < Number(guests.options[k].value)) {
-            guests.options[k].setAttribute('disabled', 'disabled');
-          }
-          if (Number(room.options[j].value) !== 100) {
-            guests.options[3].setAttribute('disabled', 'disabled');
-          }
-        }
-      }
+
+var changeGuestsOption = function (room, guests) {
+  guests.addEventListener('change', function () {
+    var roomValue = room.value;
+    var guestsCapacity = guests.value;
+    if ((Number(roomValue) < Number(guestsCapacity)) || (Number(guestsCapacity) === GUESTS_CAPACITY)) {
+      housingGuestsSelect.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
+    } else {
+      housingGuestsSelect.setCustomValidity('');
     }
-  }
-  );
+    if ((Number(roomValue) === NUMBER_OF_ROOMS) && ((Number(guestsCapacity)) > GUESTS_CAPACITY)) {
+      housingGuestsSelect.setCustomValidity('100 комнат не для гостей :)');
+    } else if ((Number(roomValue) === NUMBER_OF_ROOMS)) {
+      housingGuestsSelect.setCustomValidity('');
+    }
+  });
 };
-onChangeRoomClick(housingRoomsSelect, housingGuestsSelect);
-// -------------------------------------------------------------
+
+changeGuestsOption(housingRoomsSelect, housingGuestsSelect);
 
 adressInput.setAttribute('value', (MAIN_PIN_XCOORD + (MAIN_PIN_XSIZE / 2)) + ',' + ' ' + (MAIN_PIN_YCOORD + (MAIN_PIN_YSIZE - (MAIN_PIN_YSIZE - MAIN_PIN_XSIZE)) / 2));
 
 var disableElements = function (element) {
   for (var j = 0; j < element.length; j++) {
-    element[i].setAttribute('disabled', 'disabled');
+    element[j].setAttribute('disabled', 'disabled');
   }
 
 };
 var enableElements = function (element) {
   for (var k = element.length - 1; k >= 0; k--) {
-    element[i].removeAttribute('disabled');
+    element[k].removeAttribute('disabled');
   }
   adressInput.setAttribute('disabled', 'disabled');
 };
