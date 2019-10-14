@@ -3,13 +3,26 @@
 (function () {
   var map = document.querySelector('.map');
   var similarPinElement = map.querySelector('.map__pins');
-  var randomAdverts = window.data.getRandomSpecsArr();
+  var main = document.querySelector('main');
   var fragment = document.createDocumentFragment();
-  /* map.classList.remove('map--faded'); */
-  for (var i = 0; i < randomAdverts.length; i++) {
-    fragment.appendChild(window.card.renderAdvert(randomAdverts[i]));
-    fragment.appendChild(window.pin.renderPin(randomAdverts[i]));
-  }
-  similarPinElement.appendChild(fragment);
+  var SimillarErrorTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
+  window.map = {
+    successHandler: function (adverts) {
+      for (var i = 0; i < adverts.length; i++) {
+        fragment.appendChild(window.card.renderAdvert(adverts[i]));
+        fragment.appendChild(window.pin.renderPin(adverts[i]));
+      }
+      similarPinElement.appendChild(fragment);
+
+    },
+
+    errorHandler: function (errorMessage) {
+      var ErrorTemplate = SimillarErrorTemplate.cloneNode(true);
+      ErrorTemplate.querySelector('.error__message').textContent = errorMessage;
+      main.insertAdjacentElement('afterbegin', ErrorTemplate);
+    },
+  };
 })();
