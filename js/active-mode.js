@@ -27,6 +27,7 @@
     mapFilters.classList.remove('map__filters--disabled');
     enableElements(fieldsetsAdForm);
     enableElements(mapFilters.children);
+    window.load(window.map.successHandler, window.map.errorHandler);
   };
 
   adForm.classList.add('ad-form--disabled');
