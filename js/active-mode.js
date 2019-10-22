@@ -8,16 +8,17 @@
   var adressInput = document.querySelector('#address');
   var mainPin = document.querySelector('.map__pin--main');
   window.adressInput = adressInput;
-  var disableElements = function (element) {
-    for (var j = 0; j < element.length; j++) {
-      element[j].setAttribute('disabled', 'disabled');
-    }
 
+  var disableElements = function (element) {
+    Array.from(element).forEach(function (select) {
+      select.setAttribute('disabled', 'disabled');
+    });
   };
+
   var enableElements = function (element) {
-    for (var k = element.length - 1; k >= 0; k--) {
-      element[k].removeAttribute('disabled');
-    }
+    Array.from(element).forEach(function (select) {
+      select.removeAttribute('disabled');
+    });
     adressInput.setAttribute('disabled', 'disabled');
   };
 
@@ -28,6 +29,7 @@
     enableElements(fieldsetsAdForm);
     enableElements(mapFilters.children);
     window.load(window.map.successHandler, window.map.errorHandler);
+
   };
 
   adForm.classList.add('ad-form--disabled');
