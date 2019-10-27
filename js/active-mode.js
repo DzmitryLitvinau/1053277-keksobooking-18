@@ -30,7 +30,7 @@
       mapFilters.classList.remove('map__filters--disabled');
       window.activeMode.enableElements(fieldsetsAdForm);
       window.activeMode.enableElements(mapFilters.children);
-      window.load(window.map.successHandler, window.map.errorHandler);
+      // window.load(window.map.successHandler, window.map.errorHandler);
 
     },
 
@@ -44,9 +44,12 @@
   };
 
   window.activeMode.getDisableMode();
-  mainPin.addEventListener('mousedown', window.activeMode.getActiveMode);
-  /* mainPin.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, window.form.addErrorMessage);
-  }); */
+  window.load(window.map.successHandler, window.map.errorHandler);
+
+  mainPin.addEventListener('keydown', function (evt) {
+    window.util.isEnterEvent(evt, window.activeMode.getActiveMode);
+  });
+  // не работает хотя код выше работает.
+  // mainPin.addEventListener('keydown', window.map.onMainPinEnterPress);
 
 })();

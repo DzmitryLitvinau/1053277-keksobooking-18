@@ -5,6 +5,7 @@
   var mapPin = map.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
   var typeHouse = document.querySelector('#housing-type');
+  var mapPinMain = mapPin.querySelector('.map__pin--main');
   var adverts = [];
   window.adverts = adverts;
 
@@ -17,10 +18,8 @@
     }
     mapPin.appendChild(fragment);
     window.map.hideAdverts();
-    window.map.onClickPin();
+    mapPin.addEventListener('click', window.map.onClickSmallPin);
     window.map.onClickAdvertPopupClose();
-
-    // window.map.onAdvertPopupEscPress();
   };
 
   window.map = {
@@ -42,18 +41,20 @@
       });
     },
 
-    onClickPin: function () {
-      mapPin.addEventListener('click', function (evt) {
-        var smallMapPin = evt.target.closest('.map__pin');
-        var smallMapPins = mapPin.querySelectorAll('.map__pin');
-        Array.from(smallMapPins).forEach(function (pin) {
-          pin.classList.remove('map__pin--active');
-        });
-        window.map.hideAdverts();
-        if (smallMapPin) {
-          window.map.openAdvertPopup(smallMapPin);
-        }
+    onMainPinEnterPress: function (evt) {
+      window.util.isEnterEvent(evt, window.activeMode.getActiveMode);
+    },
+
+    onClickSmallPin: function (evt) {
+      var smallMapPin = evt.target.closest('.map__pin');
+      var smallMapPins = mapPin.querySelectorAll('.map__pin');
+      Array.from(smallMapPins).forEach(function (pin) {
+        pin.classList.remove('map__pin--active');
       });
+      window.map.hideAdverts();
+      if (smallMapPin && (mapPinMain.className !== 'map__pin--main')) {
+        window.map.openAdvertPopup(smallMapPin);
+      }
       document.addEventListener('keydown', window.map.onAdvertPopupEscPress);
     },
 
@@ -87,7 +88,7 @@
 
     filterTypeHouse: function (typeOfHouse) {
       typeOfHouse.addEventListener('change', function () {
-        Array.from(typeOfHouse.children).forEach(function (select) {
+        Array.from(typeOfHouse.children).forEach(function () {
           window.render(adverts.filter(function (house) {
             return house.offer.type === 'house';
           }));
