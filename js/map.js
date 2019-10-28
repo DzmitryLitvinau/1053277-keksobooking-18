@@ -8,7 +8,7 @@
   var mapPinMain = mapPin.querySelector('.map__pin--main');
   var adverts = [];
   window.adverts = adverts;
-  var mapFilters = document.querySelector('.map__filters');
+  // var mapFilters = document.querySelector('.map__filters');
   window.render = function (advert) {
     var takeNumber = advert.length > 5 ? 5 : advert.length;
     mapPin.innerHTML = '';
