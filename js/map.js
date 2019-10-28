@@ -8,7 +8,7 @@
   var mapPinMain = mapPin.querySelector('.map__pin--main');
   var adverts = [];
   window.adverts = adverts;
-
+  var mapFilters = document.querySelector('.map__filters');
   window.render = function (advert) {
     var takeNumber = advert.length > 5 ? 5 : advert.length;
     mapPin.innerHTML = '';
@@ -21,7 +21,11 @@
     mapPin.addEventListener('click', window.map.onClickSmallPin);
     window.map.onClickAdvertPopupClose();
   };
-
+  /* var filterSelect = document.querySelectorAll('.map__filters select');
+  var filterInput = document.querySelectorAll('.map__filters input');
+  filterSelect.forEach(function (el) {
+    el.addEventListener('change', updateFilter);
+  }); */
   window.map = {
     successHandler: function (data) {
       adverts = data;
@@ -95,6 +99,7 @@
         });
       });
     },
+
     /* filterTypeHouse: function (typeOfHouse) {
 
       Array.from(typeOfHouse.children).forEach(function (select) {
@@ -106,18 +111,6 @@
       });
     }, */
 
-    /* filterTypeHouse: function (typeOfHouse) {
-      typeOfHouse.addEventListener('change', function (evt) {
-        var arrayHouses = Array.from(typeOfHouse.children);
-        var neededAdvert = window.render(adverts.filter(function (house) {
-          return house.offer.type === arrayHouses.value;
-        }));
-        switch (arrayHouses) {
-          case 'House':
-            return neededAdvert;
-        }
-      });
-    }, */
   };
 
 

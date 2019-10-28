@@ -165,7 +165,7 @@
     },
 
     onSubmitButton: function () {
-      // ошибка 400 при отправке
+      // ошибка 404 при отправке
       adForm.addEventListener('submit', function (evt) {
         window.form.submitForm(evt);
       });
