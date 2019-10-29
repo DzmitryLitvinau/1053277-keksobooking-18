@@ -5,6 +5,12 @@
   var mapPin = map.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
   var typeHouse = document.querySelector('#housing-type');
+  var housingRooms = document.querySelector('#housing-rooms');
+  var housingGuests = document.querySelector('#housing-guests');
+  var housingPrice = document.querySelector('#housing-price');
+  var housingFeatures = document.querySelectorAll('#housing-features input');
+  var housingFeature = document.querySelector('#housing-features');
+  console.log(housingFeature.id);
   var mapPinMain = mapPin.querySelector('.map__pin--main');
   var adverts = [];
   window.adverts = adverts;
@@ -28,8 +34,13 @@
   }); */
   window.map = {
     successHandler: function (data) {
+      window.render(data);
       adverts = data;
       window.map.filterTypeHouse(typeHouse);
+      window.map.filterRoomsNumber(housingRooms);
+      window.map.filterGuestsNumber(housingGuests);
+      window.map.filterPrice(housingPrice);
+      window.map.filterFeature(housingFeature);
     },
 
     openAdvertPopup: function (selected) {
@@ -91,29 +102,71 @@
     },
 
     filterTypeHouse: function (typeOfHouse) {
-      typeOfHouse.addEventListener('change', function () {
-        Array.from(typeOfHouse.children).forEach(function () {
-          window.render(adverts.filter(function (house) {
-            return house.offer.type === 'house';
-          }));
-        });
+      typeOfHouse.addEventListener('change', function (evt) {
+        window.render(adverts.filter(function (advert) {
+          return advert.offer.type === evt.target.value;
+        }));
       });
     },
-
-    /* filterTypeHouse: function (typeOfHouse) {
-
-      Array.from(typeOfHouse.children).forEach(function (select) {
-        typeOfHouse.addEventListener('change', function () {
-          window.render(adverts.filter(function (house) {
-            return house.offer.type === select.value;
-          }));
-        });
+    filterRoomsNumber: function (roomsNumber) {
+      roomsNumber.addEventListener('change', function (evt) {
+        window.render(adverts.filter(function (advert) {
+          return advert.offer.rooms === Number(evt.target.value);
+        }));
       });
-    }, */
+    },
+    filterGuestsNumber: function (guestsNumber) {
+      guestsNumber.addEventListener('change', function (evt) {
+        window.render(adverts.filter(function (advert) {
+          if (evt.target.value === 'any') {
+            return advert.offer.guests;
+          }
+          return advert.offer.guests === Number(evt.target.value);
+        }));
+      });
+    },
+    filterPrice: function (priceNumber) {
+      priceNumber.addEventListener('change', function (evt) {
+        window.render(adverts.filter(function (advert) {
+          switch (evt.target.value) {
+            case 'any':
+              return advert.offer.price;
+            case 'low':
+              return (advert.offer.price < 10000);
+            case 'middle':
+              return (advert.offer.price >= 10000) && (advert.offer.price < 50000);
+            case 'high':
+              return (advert.offer.price >= 50000);
+            default:
+              throw new Error('Неизвестная сумма: «' + evt.target.value + '»');
+          }
+
+        }));
+      });
+    },
+    filterFeature: function (filterFeature) {
+      filterFeature.addEventListener('change', function (evt) {
+        window.render(adverts.filter(function (advert) {
+          switch (evt.target.id) {
+            case 'filter-wifi':
+              return advert.features === '0';
+            case 'filter-dishwasher':
+              return (advert.offer.price < 10000);
+            case 'filter-parking':
+              return (advert.offer.price >= 10000) && (advert.offer.price < 50000);
+            case 'filter-washer':
+              return (advert.offer.price >= 50000);
+            case 'filter-elevator':
+              return (advert.offer.price >= 50000);
+            case 'filter-conditioner':
+              return (advert.offer.price >= 50000);
+            default:
+              throw new Error('Неизвестная сумма: «' + evt.target.value + '»');
+          }
+
+        }));
+      });
+    }
 
   };
-
-
-  window.map.filterTypeHouse(typeHouse);
-
 })();

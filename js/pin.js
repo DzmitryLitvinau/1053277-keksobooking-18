@@ -23,9 +23,14 @@
   };
 
   var mainPin = document.querySelector('.map__pin--main');
+  var housingRoomsSelect = document.querySelector('#room_number');
+  var housingGuestsSelect = document.querySelector('#capacity');
 
   mainPin.addEventListener('mousedown', function (evt) {
     window.activeMode.getActiveMode();
+    window.form.setTitleField();
+    window.form.setPriceField();
+    window.form.changeGuestsOption(housingRoomsSelect, housingGuestsSelect);
     evt.preventDefault();
 
     var startCoords = {

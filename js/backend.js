@@ -51,5 +51,8 @@
     xhr.open('POST', URL);
     xhr.send(data);
   };
+  /* window.onMainPinEnterPress = function (evt) {
+    window.util.isEnterEvent(evt, window.activeMode.getActiveMode);
+  }; */
 
 })();

@@ -3,8 +3,7 @@
 (function () {
   var NUMBER_OF_ROOMS = 100;
   var GUESTS_CAPACITY = 0;
-  var housingRoomsSelect = document.querySelector('#room_number');
-  var housingGuestsSelect = document.querySelector('#capacity');
+
   var typeHouse = document.querySelector('#type');
   var priceField = document.querySelector('#price');
   var timeIn = document.querySelector('#timein');
@@ -22,40 +21,7 @@
   var map = document.querySelector('.map');
   var mapPin = map.querySelector('.map__pins');
 
-  //   var success = main.querySelector('.success');
-  //   var error = main.querySelector('.error');
   var buttonReset = adForm.querySelector('.ad-form__reset');
-
-  var changeGuestsOption = function (room, guests) {
-    guests.addEventListener('change', function () {
-      var roomValue = room.value;
-      var guestsCapacity = guests.value;
-      if ((Number(roomValue) < Number(guestsCapacity)) || (Number(guestsCapacity) === GUESTS_CAPACITY)) {
-        housingGuestsSelect.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
-      } else {
-        housingGuestsSelect.setCustomValidity('');
-      }
-      if ((Number(roomValue) === NUMBER_OF_ROOMS) && ((Number(guestsCapacity)) > GUESTS_CAPACITY)) {
-        housingGuestsSelect.setCustomValidity('100 комнат не для гостей :)');
-      } else if ((Number(roomValue) === NUMBER_OF_ROOMS)) {
-        housingGuestsSelect.setCustomValidity('');
-      }
-    });
-  };
-  var setTitleField = function () {
-    var titleField = document.querySelector('#title');
-    titleField.setAttribute('required', 'required');
-    titleField.setAttribute('minlength', '30');
-    titleField.setAttribute('maxlength', '100');
-  };
-
-  var setPriceField = function () {
-    priceField.setAttribute('required', 'required');
-    priceField.setAttribute('max', '1000000');
-    if (Number(priceField.value) > 1000000) {
-      priceField.setCustomValidity('Цена за ночь должна не превышать 1000000');
-    }
-  };
 
   // не рабочий код с switch
   /*   var typeHouseValues = Array.from(typeHouse.children).map(function (it) {
@@ -92,42 +58,22 @@
       }
     });
   };
-  /*   var selectTimeOut = function (selected) {
-    var selectedValue = selected;
-    var selectedTimeOut = document.querySelector('timeOut[value="selectedValue"]');
-    for (var i = 0; i < timeOut.options.length; i++) {
-      if (selectedValue === timeOut.options[i].value) {
-        timeOut.options[i].setAttribute('selected', 'selected');
-      } else {
-        i++;
-      }
-    }
-  }; */
-  /*   var connectTimeInToTimeOut = function () {
-    timeIn.addEventListener('change', function (evt) {
-      var target = evt.target;
-      if (target.value !== timeOut.value) {
-        selectTimeOut(target.value);
-      }
-    });
-  }; */
+
   var connectTimeInToTimeOut = function () {
-    timeIn.addEventListener('change', function () {
-      for (var i = 0; i < timeOut.options.length; i++) {
-        if (timeIn.value === timeOut.options[i].value) {
-          timeOut.options[i].setAttribute('selected', 'selected');
-        } else {
-          i++;
-        }
-      }
+    timeIn.addEventListener('change', function (evt) {
+      timeOut.value = evt.target.value;
     });
   };
 
-  setTitleField();
-  setPriceField();
+  var connectTimeOutToTimeIn = function () {
+    timeOut.addEventListener('change', function (evt) {
+      timeIn.value = evt.target.value;
+    });
+  };
+
   setPriceToTypeHouse();
-  changeGuestsOption(housingRoomsSelect, housingGuestsSelect);
   connectTimeInToTimeOut();
+  connectTimeOutToTimeIn();
 
   window.adressInput.setAttribute('value', (window.pin.MAIN_PIN_XCOORD + (window.pin.MAIN_PIN_XSIZE / 2)) + ',' + ' ' + (window.pin.MAIN_PIN_YCOORD + window.pin.MAIN_PIN_YSIZE));
 
@@ -135,8 +81,43 @@
     addSuccessMessage: function () {
       var successTemplate = simillarSuccessTemplate.cloneNode(true);
       main.insertAdjacentElement('afterbegin', successTemplate);
+
+    },
+    setTitleField: function () {
+      var titleField = document.querySelector('#title');
+      titleField.setAttribute('required', 'required');
+      titleField.setAttribute('minlength', '30');
+      titleField.setAttribute('maxlength', '100');
     },
 
+    setPriceField: function () {
+      priceField.setAttribute('required', 'required');
+      priceField.setAttribute('max', '1000000');
+      priceField.addEventListener('blur', function () {
+        if (Number(priceField.value) > 1000000) {
+          priceField.setCustomValidity('Цена за ночь не должна превышать 1000000');
+        } else {
+          priceField.setCustomValidity('');
+        }
+      });
+    },
+    changeGuestsOption: function (room, guests) {
+      guests.value = room.value;
+      guests.addEventListener('change', function () {
+        var roomValue = room.value;
+        var guestsCapacity = guests.value;
+        if ((Number(roomValue) < Number(guestsCapacity)) || (Number(guestsCapacity) === GUESTS_CAPACITY)) {
+          guests.setCustomValidity('Количество гостей должно быть меньше или равно количеству комнат.');
+        } else {
+          guests.setCustomValidity('');
+        }
+        if ((Number(roomValue) === NUMBER_OF_ROOMS) && ((Number(guestsCapacity)) > GUESTS_CAPACITY)) {
+          guests.setCustomValidity('100 комнат не для гостей :)');
+        } else if ((Number(roomValue) === NUMBER_OF_ROOMS)) {
+          guests.setCustomValidity('');
+        }
+      });
+    },
     onSuccessSubmit: function () {
       window.activeMode.getDisableMode();
       window.form.addSuccessMessage();
@@ -165,7 +146,6 @@
     },
 
     onSubmitButton: function () {
-      // ошибка 404 при отправке
       adForm.addEventListener('submit', function (evt) {
         window.form.submitForm(evt);
       });
@@ -200,9 +180,20 @@
 
     onErrorFormMessage: function () {
       var error = main.querySelector('.error');
+      var errorButton = document.querySelector('.error__button');
       error.addEventListener('click', window.form.closeErrorMessage);
-      window.form.onErrorMessageButtonPress();
+      errorButton.addEventListener('click', window.form.closeErrorMessage);
+      errorButton.addEventListener('keydown', window.form.onErrorMessageEnterPress);
+      errorButton.addEventListener('blur', window.form.getFocusErrorButton, true);
       document.addEventListener('keydown', window.form.onErrorMessageEscPress);
+      // window.form.onErrorMessageButtonPress();
+      // Для поддержки в firefox
+      var elements = document.querySelectorAll('a, input, select, textarea, button');
+      Array.from(elements).forEach(function (el) {
+        el.tabIndex = -1;
+      });
+      errorButton.focus();
+      errorButton.tabIndex = 1;
     },
 
     onErrorMessageEscPress: function (evt) {
@@ -212,20 +203,24 @@
     onErrorMessageEnterPress: function (evt) {
       window.util.isEnterEvent(evt, window.form.closeErrorMessage);
     },
-
-    onErrorMessageButtonPress: function () {
+    getFocusErrorButton: function () {
       var errorButton = document.querySelector('.error__button');
       errorButton.focus();
+    },
+    /* onErrorMessageButtonPress: function () {
+      var errorButton = document.querySelector('.error__button');
       errorButton.addEventListener('click', window.form.closeErrorMessage);
       errorButton.addEventListener('keydown', window.form.onErrorMessageEnterPress);
-    },
+    }, */
 
     onResetForm: function () {
       buttonReset.addEventListener('click', function () {
         window.activeMode.getDisableMode();
         window.map.deletePinsAndAdverts();
         mapPin.appendChild(mainPinClone);
+        mainPinClone.focus();
         mainPinClone.addEventListener('mousedown', window.activeMode.getActiveMode);
+        mainPinClone.addEventListener('keydown', window.map.onMainPinEnterPress);
         // mainPin.removeEventListener('keydown', window.map.onMainPinEnterPress);
       });
     },
@@ -233,4 +228,6 @@
 
   window.form.onSubmitButton();
   window.form.onResetForm();
+
+
 })();

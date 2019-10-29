@@ -21,7 +21,7 @@
       Array.from(element).forEach(function (select) {
         select.removeAttribute('disabled');
       });
-      adressInput.setAttribute('disabled', 'disabled');
+      adressInput.setAttribute('readonly', 'readonly');
     },
 
     getActiveMode: function () {
@@ -30,7 +30,7 @@
       mapFilters.classList.remove('map__filters--disabled');
       window.activeMode.enableElements(fieldsetsAdForm);
       window.activeMode.enableElements(mapFilters.children);
-      // window.load(window.map.successHandler, window.map.errorHandler);
+      window.load(window.map.successHandler, window.map.errorHandler);
 
     },
 
@@ -40,16 +40,21 @@
       mapFilters.classList.add('map__filters--disabled');
       window.activeMode.disableElements(mapFilters.children);
       window.activeMode.disableElements(fieldsetsAdForm);
+      adForm.reset();
+      mainPin.focus();
     },
   };
 
   window.activeMode.getDisableMode();
-  window.load(window.map.successHandler, window.map.errorHandler);
-
-  mainPin.addEventListener('keydown', function (evt) {
+  // window.load(window.map.successHandler, window.map.errorHandler);
+  /* var onMainPinEnterPress = function (evt) {
     window.util.isEnterEvent(evt, window.activeMode.getActiveMode);
-  });
+  }; */
+  /* mainPin.addEventListener('keydown', function (evt) {
+    window.util.isEnterEvent(evt, window.activeMode.getActiveMode);
+  }); */
   // не работает хотя код выше работает.
-  // mainPin.addEventListener('keydown', window.map.onMainPinEnterPress);
+
+  mainPin.addEventListener('keydown', window.map.onMainPinEnterPress, true);
 
 })();
