@@ -20,8 +20,5 @@
         action();
       }
     },
-   /*  onMainPinEnterPress: function (evt) {
-      window.util.isEnterEvent(evt, window.activeMode.getActiveMode);
-    }, */
   };
 })();

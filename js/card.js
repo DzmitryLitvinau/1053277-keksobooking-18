@@ -2,12 +2,18 @@
 
 (function () {
   var similarAdvertTemplate = document.querySelector('#card')
-  .content
-  .querySelector('.map__card');
+    .content
+    .querySelector('.map__card');
 
   window.card = {
     renderAdvert: function (advert) {
       var advertElement = similarAdvertTemplate.cloneNode(true);
+      for (var prop in advert.offer) {
+        if (advert.offer[prop].length < 1) {
+          advertElement.querySelector('[class*=' + prop + ']').classList.add('hidden');
+          advertElement.querySelector('[class*=' + prop + ']').firstElementChild.classList.add('hidden');
+        }
+      }
       advertElement.querySelector('.popup__avatar').src = advert.author.avatar;
       advertElement.querySelector('.popup__title').textContent = advert.offer.title;
       advertElement.querySelector('.popup__text--address').textContent = advert.offer.address;
