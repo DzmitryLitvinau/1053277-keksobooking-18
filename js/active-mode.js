@@ -29,7 +29,6 @@
       mapFilters.classList.remove('map__filters--disabled');
       enableElements(fieldsetsAdForm);
       enableElements(mapFilters.children);
-      // window.load(window.map.successHandler, window.map.errorHandler);
     },
 
     getDisableMode: function () {
@@ -44,8 +43,6 @@
   };
 
   window.activeMode.getDisableMode();
-  // window.load(window.map.successHandler, window.map.errorHandler);
-
   mainPin.addEventListener('keydown', window.map.onMainPinEnterPress, true);
 
 })();

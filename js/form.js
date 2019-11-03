@@ -17,7 +17,6 @@
     .content
     .querySelector('.error');
   var mapPinMain = document.querySelector('.map__pin--main');
-  // var mainPinClone = mapPinMain.cloneNode(true);
   var map = document.querySelector('.map');
   var mapPin = map.querySelector('.map__pins');
   var buttonReset = adForm.querySelector('.ad-form__reset');
@@ -132,8 +131,6 @@
     errorButton.addEventListener('keydown', onErrorMessageEnterPress);
     errorButton.addEventListener('blur', getFocusErrorButton, true);
     document.addEventListener('keydown', onErrorMessageEscPress);
-    // window.form.onErrorMessageButtonPress();
-    // Для поддержки в firefox
     var elements = document.querySelectorAll('a, input, select, textarea, button');
     Array.from(elements).forEach(function (el) {
       el.tabIndex = -1;
@@ -163,7 +160,6 @@
       mapPinMain.focus();
       mapPinMain.addEventListener('mousedown', window.activeMode.getActiveMode);
       mapPinMain.addEventListener('keydown', window.map.onMainPinEnterPress);
-      // mainPin.removeEventListener('keydown', window.map.onMainPinEnterPress);
     });
   };
 
@@ -204,12 +200,6 @@
         }
       });
     },
-
-    /* onErrorMessageButtonPress: function () {
-      var errorButton = document.querySelector('.error__button');
-      errorButton.addEventListener('click', window.form.closeErrorMessage);
-      errorButton.addEventListener('keydown', window.form.onErrorMessageEnterPress);
-    }, */
   };
 
   onSubmitButton();

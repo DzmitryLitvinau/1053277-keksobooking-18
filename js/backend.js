@@ -1,9 +1,10 @@
 'use strict';
 
 (function () {
-  var URL = 'https://js.dump.academy/keksobooking/data';
+  var URL;
 
   window.load = function (onLoad, onError) {
+    URL = 'https://js.dump.academy/keksobooking/data';
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -51,8 +52,5 @@
     xhr.open('POST', URL);
     xhr.send(data);
   };
-  /* window.onMainPinEnterPress = function (evt) {
-    window.util.isEnterEvent(evt, window.activeMode.getActiveMode);
-  }; */
 
 })();

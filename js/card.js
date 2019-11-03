@@ -23,8 +23,16 @@
       advertElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
       var mainFeatures = advertElement.querySelector('.popup__features');
       var randomFeature = advertElement.querySelectorAll('.popup__feature');
-      for (var i = randomFeature.length; i > advert.offer.features.length; i--) {
-        mainFeatures.removeChild(randomFeature[i - 1]);
+      for (var el in advert.offer.features) {
+        if (advert.offer.features) {
+          var featureElement = advert.offer.features[el];
+          randomFeature.forEach(function (feature) {
+            feature.remove();
+          });
+          var popupFeature = document.createElement('li');
+          popupFeature.className = 'popup__feature popup__feature--' + featureElement;
+          mainFeatures.appendChild(popupFeature);
+        }
       }
       advertElement.querySelector('.popup__description').textContent = advert.offer.description;
       advertElement.querySelector('.popup__photo').src = advert.offer.photos[0];
