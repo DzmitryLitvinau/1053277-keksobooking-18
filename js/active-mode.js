@@ -6,36 +6,47 @@
   var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
   var mapFilters = document.querySelector('.map__filters');
   var adressInput = document.querySelector('#address');
-  var mainPin = document.querySelector('.map__pin--main');
   window.adressInput = adressInput;
+  var mainPin = document.querySelector('.map__pin--main');
+
   var disableElements = function (element) {
-    for (var j = 0; j < element.length; j++) {
-      element[j].setAttribute('disabled', 'disabled');
-    }
-
+    Array.from(element).forEach(function (select) {
+      window.util.setAttributes(select, {
+        'disabled': 'disabled',
+      });
+    });
   };
+
   var enableElements = function (element) {
-    for (var k = element.length - 1; k >= 0; k--) {
-      element[k].removeAttribute('disabled');
-    }
-    adressInput.setAttribute('disabled', 'disabled');
+    Array.from(element).forEach(function (select) {
+      select.removeAttribute('disabled');
+    });
+    window.util.setAttributes(window.adressInput, {
+      'readonly': 'readonly',
+    });
   };
 
-  var getActiveMode = function () {
-    map.classList.remove('map--faded');
-    adForm.classList.remove('ad-form--disabled');
-    mapFilters.classList.remove('map__filters--disabled');
-    enableElements(fieldsetsAdForm);
-    enableElements(mapFilters.children);
-    window.load(window.map.successHandler, window.map.errorHandler);
+  window.activeMode = {
+    getActiveMode: function () {
+      map.classList.remove('map--faded');
+      adForm.classList.remove('ad-form--disabled');
+      mapFilters.classList.remove('map__filters--disabled');
+      enableElements(fieldsetsAdForm);
+      enableElements(mapFilters.children);
+    },
+
+    getDisableMode: function () {
+      map.classList.add('map--faded');
+      adForm.classList.add('ad-form--disabled');
+      mapFilters.classList.add('map__filters--disabled');
+      disableElements(mapFilters.children);
+      disableElements(fieldsetsAdForm);
+      adForm.reset();
+      mainPin.focus();
+    },
   };
 
-  adForm.classList.add('ad-form--disabled');
-  mapFilters.classList.add('map__filters--disabled');
-  disableElements(mapFilters.children);
-  disableElements(fieldsetsAdForm);
-  mainPin.addEventListener('mousedown', getActiveMode);
-  mainPin.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, getActiveMode);
-  });
+  window.activeMode.getDisableMode();
+  mainPin.addEventListener('keydown', window.map.onMainPinEnterPress, true);
+
 })();
