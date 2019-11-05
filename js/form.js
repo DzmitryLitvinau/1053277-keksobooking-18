@@ -163,7 +163,6 @@
     errorButton.addEventListener('keydown', onErrorMessageEnterPress);
     errorButton.addEventListener('blur', getFocusErrorButton, true);
     document.addEventListener('keydown', onErrorMessageEscPress);
-    /* var elements = document.querySelectorAll('a, input, select, textarea, button'); */
     Array.from(elements).forEach(function (el) {
       el.tabIndex = -1;
     });
