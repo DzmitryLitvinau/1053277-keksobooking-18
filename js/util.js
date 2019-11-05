@@ -20,5 +20,12 @@
         action();
       }
     },
+    setAttributes: function (el, attrs) {
+      for (var key in attrs) {
+        if (key) {
+          el.setAttribute(key, attrs[key]);
+        }
+      }
+    },
   };
 })();
