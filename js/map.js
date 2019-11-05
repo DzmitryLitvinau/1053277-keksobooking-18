@@ -15,9 +15,9 @@
   };
 
   var hideAdverts = function () {
-    var mapCard = mapPin.querySelectorAll('.map__card');
-    Array.from(mapCard).forEach(function (advert) {
-      advert.classList.add('hidden');
+    var mapCards = mapPin.querySelectorAll('.map__card');
+    Array.from(mapCards).forEach(function (element) {
+      element.classList.add('hidden');
     });
   };
 
@@ -50,8 +50,8 @@
     mapPin.appendChild(fragment);
     hideAdverts();
     var smallMapPins = mapPin.querySelectorAll('.map__pin');
-    Array.from(smallMapPins).forEach(function (pin) {
-      pin.addEventListener('click', window.map.onClickSmallPin);
+    Array.from(smallMapPins).forEach(function (element) {
+      element.addEventListener('click', window.map.onClickSmallPin);
     });
     onClickAdvertPopupClose();
   };
@@ -70,8 +70,8 @@
     onClickSmallPin: function (evt) {
       var smallMapPin = evt.target.closest('.map__pin');
       var smallMapPins = mapPin.querySelectorAll('.map__pin');
-      Array.from(smallMapPins).forEach(function (pin) {
-        pin.classList.remove('map__pin--active');
+      Array.from(smallMapPins).forEach(function (element) {
+        element.classList.remove('map__pin--active');
       });
       hideAdverts();
       if (smallMapPin && (mapPinMain.className !== 'map__pin--main')) {
@@ -83,13 +83,13 @@
     deletePinsAndAdverts: function () {
       var smallMapPins = mapPin.querySelectorAll('.map__pin');
       var mapCard = mapPin.querySelectorAll('.map__card');
-      Array.from(smallMapPins).forEach(function (pin) {
-        if (pin.className !== 'map__pin map__pin--main') {
-          pin.remove();
+      Array.from(smallMapPins).forEach(function (element) {
+        if (element.className !== 'map__pin map__pin--main') {
+          element.remove();
         }
       });
-      Array.from(mapCard).forEach(function (advert) {
-        advert.remove();
+      Array.from(mapCard).forEach(function (element) {
+        element.remove();
       });
     },
   };
