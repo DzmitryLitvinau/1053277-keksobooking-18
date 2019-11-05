@@ -3,7 +3,6 @@
 (function () {
   var map = document.querySelector('.map');
   var mapPin = map.querySelector('.map__pins');
-  var fragment = document.createDocumentFragment();
   var mapPinMain = mapPin.querySelector('.map__pin--main');
   var PINS_LIMIT = 5;
 
@@ -40,6 +39,7 @@
 
   window.map = {
     renderPinsAndAdverts: function (advert) {
+      var fragment = document.createDocumentFragment();
       var takeNumber = advert.length > PINS_LIMIT ? PINS_LIMIT : advert.length;
       mapPin.innerHTML = '';
       mapPin.appendChild(mapPinMain);
