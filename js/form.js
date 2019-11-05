@@ -20,21 +20,46 @@
   var map = document.querySelector('.map');
   var mapPin = map.querySelector('.map__pins');
   var buttonReset = adForm.querySelector('.ad-form__reset');
+  var elements = document.querySelectorAll('a, input, select, textarea, button');
+  var PRICE_VALUES = {
+    bungalo: '0',
+    flat: '1000',
+    house: '5000',
+    palace: '10000',
+    maxValue: '1000000',
+  };
+  var TYPES_HOUSES = {
+    bungalo: 'bungalo',
+    flat: 'flat',
+    house: 'house',
+    palace: 'palace'
+  };
 
   var setPriceToTypeHouse = function () {
     typeHouse.addEventListener('change', function () {
-      if (typeHouse.value === 'bungalo') {
-        priceField.setAttribute('min', '0');
-        priceField.setAttribute('placeholder', '0');
-      } else if (typeHouse.value === 'flat') {
-        priceField.setAttribute('min', '1000');
-        priceField.setAttribute('placeholder', '1000');
-      } else if (typeHouse.value === 'house') {
-        priceField.setAttribute('min', '5000');
-        priceField.setAttribute('placeholder', '5000');
-      } else if (typeHouse.value === 'palace') {
-        priceField.setAttribute('min', '10000');
-        priceField.setAttribute('placeholder', '10000');
+      switch (typeHouse.value) {
+        case TYPES_HOUSES.bungalo:
+          return window.util.setAttributes(priceField, {
+            'min': PRICE_VALUES.bungalo,
+            'placeholder': PRICE_VALUES.bungalo
+          });
+        case TYPES_HOUSES.flat:
+          return window.util.setAttributes(priceField, {
+            'min': PRICE_VALUES.flat,
+            'placeholder': PRICE_VALUES.flat
+          });
+        case TYPES_HOUSES.house:
+          return window.util.setAttributes(priceField, {
+            'min': PRICE_VALUES.house,
+            'placeholder': PRICE_VALUES.house
+          });
+        case TYPES_HOUSES.palace:
+          return window.util.setAttributes(priceField, {
+            'min': PRICE_VALUES.palace,
+            'placeholder': PRICE_VALUES.palace
+          });
+        default:
+          throw new Error('Неизвестная сумма: «' + typeHouse.value + '»');
       }
     });
   };
@@ -54,8 +79,12 @@
   setPriceToTypeHouse();
   connectTimeInToTimeOut();
   connectTimeOutToTimeIn();
-
-  window.adressInput.setAttribute('value', (window.pin.MAIN_PIN_XCOORD + (window.pin.MAIN_PIN_XSIZE / 2)) + ',' + ' ' + (window.pin.MAIN_PIN_YCOORD + (window.pin.MAIN_PIN_ROUND_YSIZE / 2)));
+  var setAdressInput = function () {
+    window.util.setAttributes(window.adressInput, {
+      'value': (window.pin.MAIN_PIN_XCOORD + (window.pin.MAIN_PIN_XSIZE / 2)) + ',' + ' ' + (window.pin.MAIN_PIN_YCOORD + (window.pin.MAIN_PIN_ROUND_YSIZE / 2)),
+    });
+  };
+  setAdressInput();
 
   var addSuccessMessage = function () {
     var successTemplate = simillarSuccessTemplate.cloneNode(true);
@@ -67,7 +96,7 @@
     addSuccessMessage();
     onSuccessFormMessage();
     window.map.deletePinsAndAdverts();
-    window.adressInput.setAttribute('value', (window.pin.MAIN_PIN_XCOORD + (window.pin.MAIN_PIN_XSIZE / 2)) + ',' + ' ' + (window.pin.MAIN_PIN_YCOORD + (window.pin.MAIN_PIN_ROUND_YSIZE / 2)));
+    setAdressInput();
     mapPinMain.style.left = window.pin.MAIN_PIN_XCOORD + 'px';
     mapPinMain.style.top = window.pin.MAIN_PIN_YCOORD + 'px';
 
@@ -121,6 +150,9 @@
     error.remove();
     document.removeEventListener('keydown', onErrorMessageEscPress);
     errorButton.removeEventListener('keydown', onErrorMessageEnterPress);
+    Array.from(elements).forEach(function (el) {
+      el.removeAttribute('tabIndex');
+    });
   };
 
   var onErrorFormMessage = function () {
@@ -131,7 +163,7 @@
     errorButton.addEventListener('keydown', onErrorMessageEnterPress);
     errorButton.addEventListener('blur', getFocusErrorButton, true);
     document.addEventListener('keydown', onErrorMessageEscPress);
-    var elements = document.querySelectorAll('a, input, select, textarea, button');
+    /* var elements = document.querySelectorAll('a, input, select, textarea, button'); */
     Array.from(elements).forEach(function (el) {
       el.tabIndex = -1;
     });
@@ -166,17 +198,23 @@
   window.form = {
     setTitleField: function () {
       var titleField = document.querySelector('#title');
-      titleField.setAttribute('required', 'required');
-      titleField.setAttribute('minlength', '30');
-      titleField.setAttribute('maxlength', '100');
+      window.util.setAttributes(titleField, {
+        'required': 'required',
+        'minlength': '30',
+        'maxlength': '100',
+      });
     },
 
     setPriceField: function () {
-      priceField.setAttribute('required', 'required');
-      priceField.setAttribute('max', '1000000');
+      window.util.setAttributes(priceField, {
+        'required': 'required',
+        'min': PRICE_VALUES.flat,
+        'max': PRICE_VALUES.maxValue,
+        'placeholder': PRICE_VALUES.flat
+      });
       priceField.addEventListener('input', function () {
-        if (Number(priceField.value) > 1000000) {
-          priceField.setCustomValidity('Цена за ночь не должна превышать 1000000');
+        if (Number(priceField.value) > PRICE_VALUES.maxValue) {
+          priceField.setCustomValidity('Цена за ночь не должна превышать ' + PRICE_VALUES.maxValue);
         } else {
           priceField.setCustomValidity('');
         }
