@@ -21,42 +21,42 @@
   var mapPin = map.querySelector('.map__pins');
   var buttonReset = adForm.querySelector('.ad-form__reset');
   var elements = document.querySelectorAll('a, input, select, textarea, button');
-  var PRICE_VALUES = {
-    bungalo: '0',
-    flat: '1000',
-    house: '5000',
-    palace: '10000',
-    maxValue: '1000000',
+  var priceValue = {
+    BUGNALO: '0',
+    FLAT: '1000',
+    HOUSE: '5000',
+    PALACE: '10000',
+    MAX_PRICE: '1000000',
   };
-  var TYPES_HOUSES = {
-    bungalo: 'bungalo',
-    flat: 'flat',
-    house: 'house',
-    palace: 'palace'
+  var AccommodationType = {
+    BUGNALO: 'bungalo',
+    FLAT: 'flat',
+    HOUSE: 'house',
+    PALACE: 'palace'
   };
 
   var setPriceToTypeHouse = function () {
     typeHouse.addEventListener('change', function () {
       switch (typeHouse.value) {
-        case TYPES_HOUSES.bungalo:
+        case AccommodationType.BUGNALO:
           return window.util.setAttributes(priceField, {
-            'min': PRICE_VALUES.bungalo,
-            'placeholder': PRICE_VALUES.bungalo
+            'min': priceValue.BUGNALO,
+            'placeholder': priceValue.BUGNALO
           });
-        case TYPES_HOUSES.flat:
+        case AccommodationType.FLAT:
           return window.util.setAttributes(priceField, {
-            'min': PRICE_VALUES.flat,
-            'placeholder': PRICE_VALUES.flat
+            'min': priceValue.FLAT,
+            'placeholder': priceValue.FLAT
           });
-        case TYPES_HOUSES.house:
+        case AccommodationType.HOUSE:
           return window.util.setAttributes(priceField, {
-            'min': PRICE_VALUES.house,
-            'placeholder': PRICE_VALUES.house
+            'min': priceValue.HOUSE,
+            'placeholder': priceValue.HOUSE
           });
-        case TYPES_HOUSES.palace:
+        case AccommodationType.PALACE:
           return window.util.setAttributes(priceField, {
-            'min': PRICE_VALUES.palace,
-            'placeholder': PRICE_VALUES.palace
+            'min': priceValue.PALACE,
+            'placeholder': priceValue.PALACE
           });
         default:
           throw new Error('Неизвестная сумма: «' + typeHouse.value + '»');
@@ -150,8 +150,8 @@
     error.remove();
     document.removeEventListener('keydown', onErrorMessageEscPress);
     errorButton.removeEventListener('keydown', onErrorMessageEnterPress);
-    Array.from(elements).forEach(function (el) {
-      el.removeAttribute('tabIndex');
+    Array.from(elements).forEach(function (element) {
+      element.removeAttribute('tabIndex');
     });
   };
 
@@ -163,8 +163,8 @@
     errorButton.addEventListener('keydown', onErrorMessageEnterPress);
     errorButton.addEventListener('blur', getFocusErrorButton, true);
     document.addEventListener('keydown', onErrorMessageEscPress);
-    Array.from(elements).forEach(function (el) {
-      el.tabIndex = -1;
+    Array.from(elements).forEach(function (element) {
+      element.tabIndex = -1;
     });
     errorButton.focus();
     errorButton.tabIndex = 1;
@@ -207,13 +207,13 @@
     setPriceField: function () {
       window.util.setAttributes(priceField, {
         'required': 'required',
-        'min': PRICE_VALUES.flat,
-        'max': PRICE_VALUES.maxValue,
-        'placeholder': PRICE_VALUES.flat
+        'min': priceValue.FLAT,
+        'max': priceValue.MAX_PRICE,
+        'placeholder': priceValue.FLAT
       });
       priceField.addEventListener('input', function () {
-        if (Number(priceField.value) > PRICE_VALUES.maxValue) {
-          priceField.setCustomValidity('Цена за ночь не должна превышать ' + PRICE_VALUES.maxValue);
+        if (Number(priceField.value) > priceValue.MAX_PRICE) {
+          priceField.setCustomValidity('Цена за ночь не должна превышать ' + priceValue.MAX_PRICE);
         } else {
           priceField.setCustomValidity('');
         }
