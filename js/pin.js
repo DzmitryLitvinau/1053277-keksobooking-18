@@ -20,12 +20,7 @@
 
   var getPinCoord = function () {
     var leftCoord = Math.round(Number(mapPinMain.style.left.slice(0, -2)) + (window.pin.MAIN_PIN_XSIZE / 2));
-    var topCoord;
-    if (map.className === 'map map--faded') {
-      topCoord = Number(mapPinMain.style.top.slice(0, -2));
-    } else {
-      topCoord = Number(mapPinMain.style.top.slice(0, -2)) + window.pin.MAIN_PIN_YSIZE;
-    }
+    var topCoord = (map.className === 'map map--faded') ? Number(mapPinMain.style.top.slice(0, -2)) : Number(mapPinMain.style.top.slice(0, -2)) + window.pin.MAIN_PIN_YSIZE;
     var pinCoord = leftCoord + ', ' + topCoord;
     return pinCoord;
   };
