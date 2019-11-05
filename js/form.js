@@ -78,12 +78,12 @@
   setPriceToTypeHouse();
   connectTimeInToTimeOut();
   connectTimeOutToTimeIn();
-  var setAdressInput = function () {
+  var setAddressInput = function () {
     window.util.setAttributes(window.activeMode.adressInput, {
       'value': (window.pin.MAIN_PIN_XCOORD + (window.pin.MAIN_PIN_XSIZE / 2)) + ',' + ' ' + (window.pin.MAIN_PIN_YCOORD + (window.pin.MAIN_PIN_ROUND_YSIZE / 2)),
     });
   };
-  setAdressInput();
+  setAddressInput();
 
   var addSuccessMessage = function () {
     var successTemplate = simillarSuccessTemplate.cloneNode(true);
@@ -95,7 +95,7 @@
     addSuccessMessage();
     onSuccessFormMessage();
     window.map.deletePinsAndAdverts();
-    setAdressInput();
+    setAddressInput();
     mapPinMain.style.left = window.pin.MAIN_PIN_XCOORD + 'px';
     mapPinMain.style.top = window.pin.MAIN_PIN_YCOORD + 'px';
 
