@@ -57,7 +57,7 @@
   };
 
   window.map = {
-    successHandler: function (data) {
+    onSuccessLoad: function (data) {
       window.render(data);
       window.filter.adverts = data;
       window.filter.mapFilters.addEventListener('change', window.filter.onFilterChange);
