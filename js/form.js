@@ -21,7 +21,7 @@
   var mapPin = map.querySelector('.map__pins');
   var buttonReset = adForm.querySelector('.ad-form__reset');
   var elements = document.querySelectorAll('a, input, select, textarea, button');
-  var priceValue = {
+  var PriceValue = {
     BUGNALO: '0',
     FLAT: '1000',
     HOUSE: '5000',
@@ -40,23 +40,23 @@
       switch (typeHouse.value) {
         case AccommodationType.BUGNALO:
           return window.util.setAttributes(priceField, {
-            'min': priceValue.BUGNALO,
-            'placeholder': priceValue.BUGNALO
+            'min': PriceValue.BUGNALO,
+            'placeholder': PriceValue.BUGNALO
           });
         case AccommodationType.FLAT:
           return window.util.setAttributes(priceField, {
-            'min': priceValue.FLAT,
-            'placeholder': priceValue.FLAT
+            'min': PriceValue.FLAT,
+            'placeholder': PriceValue.FLAT
           });
         case AccommodationType.HOUSE:
           return window.util.setAttributes(priceField, {
-            'min': priceValue.HOUSE,
-            'placeholder': priceValue.HOUSE
+            'min': PriceValue.HOUSE,
+            'placeholder': PriceValue.HOUSE
           });
         case AccommodationType.PALACE:
           return window.util.setAttributes(priceField, {
-            'min': priceValue.PALACE,
-            'placeholder': priceValue.PALACE
+            'min': PriceValue.PALACE,
+            'placeholder': PriceValue.PALACE
           });
         default:
           throw new Error('Неизвестная сумма: «' + typeHouse.value + '»');
@@ -207,13 +207,13 @@
     setPriceField: function () {
       window.util.setAttributes(priceField, {
         'required': 'required',
-        'min': priceValue.FLAT,
-        'max': priceValue.MAX_PRICE,
-        'placeholder': priceValue.FLAT
+        'min': PriceValue.FLAT,
+        'max': PriceValue.MAX_PRICE,
+        'placeholder': PriceValue.FLAT
       });
       priceField.addEventListener('input', function () {
-        if (Number(priceField.value) > priceValue.MAX_PRICE) {
-          priceField.setCustomValidity('Цена за ночь не должна превышать ' + priceValue.MAX_PRICE);
+        if (Number(priceField.value) > PriceValue.MAX_PRICE) {
+          priceField.setCustomValidity('Цена за ночь не должна превышать ' + PriceValue.MAX_PRICE);
         } else {
           priceField.setCustomValidity('');
         }
