@@ -9,17 +9,17 @@
   window.adressInput = adressInput;
   var mainPin = document.querySelector('.map__pin--main');
 
-  var disableElements = function (element) {
-    Array.from(element).forEach(function (select) {
-      window.util.setAttributes(select, {
+  var disableElements = function (elements) {
+    Array.from(elements).forEach(function (element) {
+      window.util.setAttributes(element, {
         'disabled': 'disabled',
       });
     });
   };
 
-  var enableElements = function (element) {
-    Array.from(element).forEach(function (select) {
-      select.removeAttribute('disabled');
+  var enableElements = function (elements) {
+    Array.from(elements).forEach(function (element) {
+      element.removeAttribute('disabled');
     });
     window.util.setAttributes(window.adressInput, {
       'readonly': 'readonly',
