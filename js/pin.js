@@ -84,8 +84,9 @@
       }
       pinElement.style.left = (pin.location.x - PIN_ELEM_XSIZE / 2) + 'px';
       pinElement.style.top = (pin.location.y - PIN_ELEM_YSIZE) + 'px';
-      pinElement.querySelector('img').src = pin.author.avatar;
-      pinElement.querySelector('img').alt = pin.offer.title;
+      var imgPinElement = pinElement.querySelector('img');
+      imgPinElement.src = pin.author.avatar;
+      imgPinElement.alt = pin.offer.title;
       return pinElement;
     },
 
