@@ -22,11 +22,11 @@
       advertElement.querySelector('.popup__text--capacity').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей';
       advertElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
       var mainFeatures = advertElement.querySelector('.popup__features');
-      var randomFeature = advertElement.querySelectorAll('.popup__feature');
-      for (var el in advert.offer.features) {
+      var randomFeatures = advertElement.querySelectorAll('.popup__feature');
+      for (var element in advert.offer.features) {
         if (advert.offer.features) {
-          var featureElement = advert.offer.features[el];
-          randomFeature.forEach(function (feature) {
+          var featureElement = advert.offer.features[element];
+          randomFeatures.forEach(function (feature) {
             feature.remove();
           });
           var popupFeature = document.createElement('li');
