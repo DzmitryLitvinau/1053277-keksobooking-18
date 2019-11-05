@@ -82,13 +82,13 @@
 
     deletePinsAndAdverts: function () {
       var smallMapPins = mapPin.querySelectorAll('.map__pin');
-      var mapCard = mapPin.querySelectorAll('.map__card');
+      var mapCards = mapPin.querySelectorAll('.map__card');
       Array.from(smallMapPins).forEach(function (element) {
         if (element.className !== 'map__pin map__pin--main') {
           element.remove();
         }
       });
-      Array.from(mapCard).forEach(function (element) {
+      Array.from(mapCards).forEach(function (element) {
         element.remove();
       });
     },
