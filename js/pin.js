@@ -64,8 +64,8 @@
       'value': getPinCoord(),
     });
   };
-  var onMouseUp = function (upEvt) {
-    upEvt.preventDefault();
+  var onMouseUp = function (evt) {
+    evt.preventDefault();
     window.activeMode.getActiveMode();
     window.load(window.map.successHandler, window.map.errorHandler);
     document.removeEventListener('mousemove', onMouseMove);
