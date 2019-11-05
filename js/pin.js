@@ -60,7 +60,7 @@
 
     mapPinMain.style.top = startCoords.y + 'px';
     mapPinMain.style.left = startCoords.x + 'px';
-    window.util.setAttributes(window.adressInput, {
+    window.util.setAttributes(window.activeMode.adressInput, {
       'value': getPinCoord(),
     });
   };
@@ -70,7 +70,7 @@
     window.backend.load(window.map.onSuccessLoad, window.form.onErrorSubmit);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
-    window.util.setAttributes(window.adressInput, {
+    window.util.setAttributes(window.activeMode.adressInput, {
       'value': getPinCoord(),
     });
   };

@@ -79,7 +79,7 @@
   connectTimeInToTimeOut();
   connectTimeOutToTimeIn();
   var setAdressInput = function () {
-    window.util.setAttributes(window.adressInput, {
+    window.util.setAttributes(window.activeMode.adressInput, {
       'value': (window.pin.MAIN_PIN_XCOORD + (window.pin.MAIN_PIN_XSIZE / 2)) + ',' + ' ' + (window.pin.MAIN_PIN_YCOORD + (window.pin.MAIN_PIN_ROUND_YSIZE / 2)),
     });
   };
