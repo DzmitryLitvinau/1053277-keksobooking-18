@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var fragmentPhoto = document.createDocumentFragment();
+  var fragmentFeature = document.createDocumentFragment();
   var similarAdvertTemplate = document.querySelector('#card')
     .content
     .querySelector('.map__card');
@@ -31,18 +33,20 @@
           });
           var popupFeature = document.createElement('li');
           popupFeature.className = 'popup__feature popup__feature--' + featureElement;
-          mainFeatures.appendChild(popupFeature);
+          fragmentFeature.appendChild(popupFeature);
         }
       }
+      mainFeatures.appendChild(fragmentFeature);
       advertElement.querySelector('.popup__description').textContent = advert.offer.description;
       advertElement.querySelector('.popup__photo').src = advert.offer.photos[0];
       var mainPhotos = advertElement.querySelector('.popup__photos');
       var randomPhoto = advertElement.querySelector('.popup__photo');
       for (var j = 1; j < advert.offer.photos.length; j++) {
         var randomPhotoClone = randomPhoto.cloneNode(true);
-        mainPhotos.appendChild(randomPhotoClone);
+        fragmentPhoto.appendChild(randomPhotoClone);
         randomPhotoClone.src = advert.offer.photos[j];
       }
+      mainPhotos.appendChild(fragmentPhoto);
       return advertElement;
     },
   };
