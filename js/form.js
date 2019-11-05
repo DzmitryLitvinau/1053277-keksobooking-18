@@ -20,7 +20,6 @@
   var map = document.querySelector('.map');
   var mapPin = map.querySelector('.map__pins');
   var buttonReset = adForm.querySelector('.ad-form__reset');
-  var elements = document.querySelectorAll('a, input, select, textarea, button');
   var PriceValue = {
     BUGNALO: '0',
     FLAT: '1000',
@@ -110,13 +109,8 @@
     main.insertAdjacentElement('afterbegin', errorTemplate);
   };
 
-  var onErrorSubmit = function (errorMessage) {
-    addErrorMessage(errorMessage);
-    onErrorFormMessage();
-  };
-
   var submitForm = function (evt) {
-    window.save(new FormData(adForm), onSuccessSubmit, onErrorSubmit);
+    window.save(new FormData(adForm), onSuccessSubmit, window.form.onErrorSubmit);
     evt.preventDefault();
   };
 
@@ -147,6 +141,7 @@
   var closeErrorMessage = function () {
     var errorButton = document.querySelector('.error__button');
     var error = main.querySelector('.error');
+    var elements = document.querySelectorAll('a, input, select, textarea, button, img, button[type="button"]');
     error.remove();
     document.removeEventListener('keydown', onErrorMessageEscPress);
     errorButton.removeEventListener('keydown', onErrorMessageEnterPress);
@@ -158,6 +153,7 @@
   var onErrorFormMessage = function () {
     var error = main.querySelector('.error');
     var errorButton = document.querySelector('.error__button');
+    var elements = document.querySelectorAll('a, input, select, textarea, button, img, button[type="button"]');
     error.addEventListener('click', closeErrorMessage);
     errorButton.addEventListener('click', closeErrorMessage);
     errorButton.addEventListener('keydown', onErrorMessageEnterPress);
@@ -236,6 +232,11 @@
           guests.setCustomValidity('');
         }
       });
+    },
+
+    onErrorSubmit: function (errorMessage) {
+      addErrorMessage(errorMessage);
+      onErrorFormMessage();
     },
   };
 
