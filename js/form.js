@@ -110,7 +110,7 @@
   };
 
   var submitForm = function (evt) {
-    window.save(new FormData(adForm), onSuccessSubmit, window.form.onErrorSubmit);
+    window.backend.save(new FormData(adForm), onSuccessSubmit, window.form.onErrorSubmit);
     evt.preventDefault();
   };
 

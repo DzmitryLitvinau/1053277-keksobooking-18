@@ -67,7 +67,7 @@
   var onMouseUp = function (evt) {
     evt.preventDefault();
     window.activeMode.getActiveMode();
-    window.load(window.map.onSuccessLoad, window.form.onErrorSubmit);
+    window.backend.load(window.map.onSuccessLoad, window.form.onErrorSubmit);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
     window.util.setAttributes(window.adressInput, {
