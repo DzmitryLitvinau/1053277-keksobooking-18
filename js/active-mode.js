@@ -11,7 +11,9 @@
 
   var disableElements = function (element) {
     Array.from(element).forEach(function (select) {
-      select.setAttribute('disabled', 'disabled');
+      window.util.setAttributes(select, {
+        'disabled': 'disabled',
+      });
     });
   };
 
@@ -19,7 +21,9 @@
     Array.from(element).forEach(function (select) {
       select.removeAttribute('disabled');
     });
-    adressInput.setAttribute('readonly', 'readonly');
+    window.util.setAttributes(window.adressInput, {
+      'readonly': 'readonly',
+    });
   };
 
   window.activeMode = {

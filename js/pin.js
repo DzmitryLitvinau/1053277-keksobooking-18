@@ -60,7 +60,9 @@
 
     mapPinMain.style.top = startCoords.y + 'px';
     mapPinMain.style.left = startCoords.x + 'px';
-    window.adressInput.setAttribute('value', getPinCoord());
+    window.util.setAttributes(window.adressInput, {
+      'value': getPinCoord(),
+    });
   };
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
@@ -68,7 +70,9 @@
     window.load(window.map.successHandler, window.map.errorHandler);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
-    window.adressInput.setAttribute('value', getPinCoord());
+    window.util.setAttributes(window.adressInput, {
+      'value': getPinCoord(),
+    });
   };
 
   window.pin = {
