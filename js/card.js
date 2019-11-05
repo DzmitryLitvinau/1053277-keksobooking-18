@@ -36,9 +36,9 @@
       }
       advertElement.querySelector('.popup__description').textContent = advert.offer.description;
       advertElement.querySelector('.popup__photo').src = advert.offer.photos[0];
+      var mainPhotos = advertElement.querySelector('.popup__photos');
+      var randomPhoto = advertElement.querySelector('.popup__photo');
       for (var j = 1; j < advert.offer.photos.length; j++) {
-        var mainPhotos = advertElement.querySelector('.popup__photos');
-        var randomPhoto = advertElement.querySelector('.popup__photo');
         var randomPhotoClone = randomPhoto.cloneNode(true);
         mainPhotos.appendChild(randomPhotoClone);
         randomPhotoClone.src = advert.offer.photos[j];
