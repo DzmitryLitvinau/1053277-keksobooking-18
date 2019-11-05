@@ -5,8 +5,6 @@
   var adForm = document.querySelector('.ad-form');
   var AdFormFieldsets = adForm.querySelectorAll('fieldset');
   var mapFilters = document.querySelector('.map__filters');
-  var adressInput = document.querySelector('#address');
-  window.adressInput = adressInput;
   var mainPin = document.querySelector('.map__pin--main');
 
   var disableElements = function (elements) {
@@ -21,12 +19,14 @@
     Array.from(elements).forEach(function (element) {
       element.removeAttribute('disabled');
     });
-    window.util.setAttributes(window.adressInput, {
+    window.util.setAttributes(window.activeMode.adressInput, {
       'readonly': 'readonly',
     });
   };
 
   window.activeMode = {
+    adressInput: document.querySelector('#address'),
+
     getActiveMode: function () {
       map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
