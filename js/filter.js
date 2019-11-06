@@ -56,7 +56,9 @@
     onFilterChange: function () {
       window.debounce(function () {
         updateAdverts = window.filter.adverts;
-        updateAdverts = updateAdverts.filter(filterTypeHouse).filter(filterPrice).filter(filterRoomsNumber).filter(filterGuestsNumber).filter(filterFeature);
+        updateAdverts = updateAdverts.filter(function (el) {
+          return filterTypeHouse(el) && filterPrice(el) && filterRoomsNumber(el) && filterGuestsNumber(el) && filterFeature(el);
+        });
         window.map.renderPinsAndAdverts(updateAdverts);
       });
     },
