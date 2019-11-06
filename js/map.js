@@ -74,7 +74,7 @@
         element.classList.remove('map__pin--active');
       });
       hideAdverts();
-      if (smallMapPin && (mapPinMain.className !== 'map__pin--main')) {
+      if (!(smallMapPin.classList.contains('map__pin--main'))) {
         openAdvertPopup(smallMapPin);
       }
       document.addEventListener('keydown', onAdvertPopupEscPress);
