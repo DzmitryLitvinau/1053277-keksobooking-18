@@ -20,12 +20,7 @@
 
   var getPinCoord = function () {
     var leftCoord = Math.round(Number(mapPinMain.style.left.slice(0, -2)) + (window.pin.MAIN_PIN_XSIZE / 2));
-    var topCoord;
-    if (map.className === 'map map--faded') {
-      topCoord = Number(mapPinMain.style.top.slice(0, -2));
-    } else {
-      topCoord = Number(mapPinMain.style.top.slice(0, -2)) + window.pin.MAIN_PIN_YSIZE;
-    }
+    var topCoord = (map.className === 'map map--faded') ? Number(mapPinMain.style.top.slice(0, -2)) : Number(mapPinMain.style.top.slice(0, -2)) + window.pin.MAIN_PIN_YSIZE;
     var pinCoord = leftCoord + ', ' + topCoord;
     return pinCoord;
   };
@@ -60,17 +55,17 @@
 
     mapPinMain.style.top = startCoords.y + 'px';
     mapPinMain.style.left = startCoords.x + 'px';
-    window.util.setAttributes(window.adressInput, {
+    window.util.setAttributes(window.activeMode.adressInput, {
       'value': getPinCoord(),
     });
   };
-  var onMouseUp = function (upEvt) {
-    upEvt.preventDefault();
+  var onMouseUp = function (evt) {
+    evt.preventDefault();
     window.activeMode.getActiveMode();
-    window.load(window.map.successHandler, window.map.errorHandler);
+    window.backend.load(window.map.onSuccessLoad, window.form.onErrorSubmit);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
-    window.util.setAttributes(window.adressInput, {
+    window.util.setAttributes(window.activeMode.adressInput, {
       'value': getPinCoord(),
     });
   };
@@ -89,8 +84,9 @@
       }
       pinElement.style.left = (pin.location.x - PIN_ELEM_XSIZE / 2) + 'px';
       pinElement.style.top = (pin.location.y - PIN_ELEM_YSIZE) + 'px';
-      pinElement.querySelector('img').src = pin.author.avatar;
-      pinElement.querySelector('img').alt = pin.offer.title;
+      var imgPinElement = pinElement.querySelector('img');
+      imgPinElement.src = pin.author.avatar;
+      imgPinElement.alt = pin.offer.title;
       return pinElement;
     },
 

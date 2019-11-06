@@ -20,43 +20,42 @@
   var map = document.querySelector('.map');
   var mapPin = map.querySelector('.map__pins');
   var buttonReset = adForm.querySelector('.ad-form__reset');
-  var elements = document.querySelectorAll('a, input, select, textarea, button');
-  var PRICE_VALUES = {
-    bungalo: '0',
-    flat: '1000',
-    house: '5000',
-    palace: '10000',
-    maxValue: '1000000',
+  var PriceValue = {
+    BUGNALO: '0',
+    FLAT: '1000',
+    HOUSE: '5000',
+    PALACE: '10000',
+    MAX_PRICE: '1000000',
   };
-  var TYPES_HOUSES = {
-    bungalo: 'bungalo',
-    flat: 'flat',
-    house: 'house',
-    palace: 'palace'
+  var AccommodationType = {
+    BUGNALO: 'bungalo',
+    FLAT: 'flat',
+    HOUSE: 'house',
+    PALACE: 'palace'
   };
 
   var setPriceToTypeHouse = function () {
     typeHouse.addEventListener('change', function () {
       switch (typeHouse.value) {
-        case TYPES_HOUSES.bungalo:
+        case AccommodationType.BUGNALO:
           return window.util.setAttributes(priceField, {
-            'min': PRICE_VALUES.bungalo,
-            'placeholder': PRICE_VALUES.bungalo
+            'min': PriceValue.BUGNALO,
+            'placeholder': PriceValue.BUGNALO
           });
-        case TYPES_HOUSES.flat:
+        case AccommodationType.FLAT:
           return window.util.setAttributes(priceField, {
-            'min': PRICE_VALUES.flat,
-            'placeholder': PRICE_VALUES.flat
+            'min': PriceValue.FLAT,
+            'placeholder': PriceValue.FLAT
           });
-        case TYPES_HOUSES.house:
+        case AccommodationType.HOUSE:
           return window.util.setAttributes(priceField, {
-            'min': PRICE_VALUES.house,
-            'placeholder': PRICE_VALUES.house
+            'min': PriceValue.HOUSE,
+            'placeholder': PriceValue.HOUSE
           });
-        case TYPES_HOUSES.palace:
+        case AccommodationType.PALACE:
           return window.util.setAttributes(priceField, {
-            'min': PRICE_VALUES.palace,
-            'placeholder': PRICE_VALUES.palace
+            'min': PriceValue.PALACE,
+            'placeholder': PriceValue.PALACE
           });
         default:
           throw new Error('Неизвестная сумма: «' + typeHouse.value + '»');
@@ -79,12 +78,12 @@
   setPriceToTypeHouse();
   connectTimeInToTimeOut();
   connectTimeOutToTimeIn();
-  var setAdressInput = function () {
-    window.util.setAttributes(window.adressInput, {
+  var setAddressInput = function () {
+    window.util.setAttributes(window.activeMode.adressInput, {
       'value': (window.pin.MAIN_PIN_XCOORD + (window.pin.MAIN_PIN_XSIZE / 2)) + ',' + ' ' + (window.pin.MAIN_PIN_YCOORD + (window.pin.MAIN_PIN_ROUND_YSIZE / 2)),
     });
   };
-  setAdressInput();
+  setAddressInput();
 
   var addSuccessMessage = function () {
     var successTemplate = simillarSuccessTemplate.cloneNode(true);
@@ -96,7 +95,7 @@
     addSuccessMessage();
     onSuccessFormMessage();
     window.map.deletePinsAndAdverts();
-    setAdressInput();
+    setAddressInput();
     mapPinMain.style.left = window.pin.MAIN_PIN_XCOORD + 'px';
     mapPinMain.style.top = window.pin.MAIN_PIN_YCOORD + 'px';
 
@@ -110,13 +109,8 @@
     main.insertAdjacentElement('afterbegin', errorTemplate);
   };
 
-  var onErrorSubmit = function (errorMessage) {
-    addErrorMessage(errorMessage);
-    onErrorFormMessage();
-  };
-
   var submitForm = function (evt) {
-    window.save(new FormData(adForm), onSuccessSubmit, onErrorSubmit);
+    window.backend.save(new FormData(adForm), onSuccessSubmit, window.form.onErrorSubmit);
     evt.preventDefault();
   };
 
@@ -147,24 +141,26 @@
   var closeErrorMessage = function () {
     var errorButton = document.querySelector('.error__button');
     var error = main.querySelector('.error');
+    var elements = document.querySelectorAll('a, input, select, textarea, button, img, button[type="button"]');
     error.remove();
     document.removeEventListener('keydown', onErrorMessageEscPress);
     errorButton.removeEventListener('keydown', onErrorMessageEnterPress);
-    Array.from(elements).forEach(function (el) {
-      el.removeAttribute('tabIndex');
+    Array.from(elements).forEach(function (element) {
+      element.removeAttribute('tabIndex');
     });
   };
 
   var onErrorFormMessage = function () {
     var error = main.querySelector('.error');
     var errorButton = document.querySelector('.error__button');
+    var elements = document.querySelectorAll('a, input, select, textarea, button, img, button[type="button"]');
     error.addEventListener('click', closeErrorMessage);
     errorButton.addEventListener('click', closeErrorMessage);
     errorButton.addEventListener('keydown', onErrorMessageEnterPress);
     errorButton.addEventListener('blur', getFocusErrorButton, true);
     document.addEventListener('keydown', onErrorMessageEscPress);
-    Array.from(elements).forEach(function (el) {
-      el.tabIndex = -1;
+    Array.from(elements).forEach(function (element) {
+      element.tabIndex = -1;
     });
     errorButton.focus();
     errorButton.tabIndex = 1;
@@ -207,13 +203,13 @@
     setPriceField: function () {
       window.util.setAttributes(priceField, {
         'required': 'required',
-        'min': PRICE_VALUES.flat,
-        'max': PRICE_VALUES.maxValue,
-        'placeholder': PRICE_VALUES.flat
+        'min': PriceValue.FLAT,
+        'max': PriceValue.MAX_PRICE,
+        'placeholder': PriceValue.FLAT
       });
       priceField.addEventListener('input', function () {
-        if (Number(priceField.value) > PRICE_VALUES.maxValue) {
-          priceField.setCustomValidity('Цена за ночь не должна превышать ' + PRICE_VALUES.maxValue);
+        if (Number(priceField.value) > PriceValue.MAX_PRICE) {
+          priceField.setCustomValidity('Цена за ночь не должна превышать ' + PriceValue.MAX_PRICE);
         } else {
           priceField.setCustomValidity('');
         }
@@ -236,6 +232,11 @@
           guests.setCustomValidity('');
         }
       });
+    },
+
+    onErrorSubmit: function (errorMessage) {
+      addErrorMessage(errorMessage);
+      onErrorFormMessage();
     },
   };
 

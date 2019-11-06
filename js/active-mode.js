@@ -3,35 +3,35 @@
 (function () {
   var map = document.querySelector('.map');
   var adForm = document.querySelector('.ad-form');
-  var fieldsetsAdForm = adForm.querySelectorAll('fieldset');
+  var AdFormFieldsets = adForm.querySelectorAll('fieldset');
   var mapFilters = document.querySelector('.map__filters');
-  var adressInput = document.querySelector('#address');
-  window.adressInput = adressInput;
   var mainPin = document.querySelector('.map__pin--main');
 
-  var disableElements = function (element) {
-    Array.from(element).forEach(function (select) {
-      window.util.setAttributes(select, {
+  var disableElements = function (elements) {
+    Array.from(elements).forEach(function (element) {
+      window.util.setAttributes(element, {
         'disabled': 'disabled',
       });
     });
   };
 
-  var enableElements = function (element) {
-    Array.from(element).forEach(function (select) {
-      select.removeAttribute('disabled');
+  var enableElements = function (elements) {
+    Array.from(elements).forEach(function (element) {
+      element.removeAttribute('disabled');
     });
-    window.util.setAttributes(window.adressInput, {
+    window.util.setAttributes(window.activeMode.adressInput, {
       'readonly': 'readonly',
     });
   };
 
   window.activeMode = {
+    adressInput: document.querySelector('#address'),
+
     getActiveMode: function () {
       map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
       mapFilters.classList.remove('map__filters--disabled');
-      enableElements(fieldsetsAdForm);
+      enableElements(AdFormFieldsets);
       enableElements(mapFilters.children);
     },
 
@@ -40,7 +40,7 @@
       adForm.classList.add('ad-form--disabled');
       mapFilters.classList.add('map__filters--disabled');
       disableElements(mapFilters.children);
-      disableElements(fieldsetsAdForm);
+      disableElements(AdFormFieldsets);
       adForm.reset();
       mainPin.focus();
     },
