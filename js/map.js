@@ -84,7 +84,7 @@
       var smallMapPins = mapPin.querySelectorAll('.map__pin');
       var mapCards = mapPin.querySelectorAll('.map__card');
       Array.from(smallMapPins).forEach(function (element) {
-        if (element.className !== 'map__pin map__pin--main') {
+        if (!(element.classList.contains('map__pin--main'))) {
           element.remove();
         }
       });
