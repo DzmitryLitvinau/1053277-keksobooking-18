@@ -10,10 +10,10 @@
   var timeOut = document.querySelector('#timeout');
   var adForm = document.querySelector('.ad-form');
   var main = document.querySelector('main');
-  var simillarSuccessTemplate = document.querySelector('#success')
+  var similarSuccessTemplate = document.querySelector('#success')
     .content
     .querySelector('.success');
-  var simillarErrorTemplate = document.querySelector('#error')
+  var similarErrorTemplate = document.querySelector('#error')
     .content
     .querySelector('.error');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -86,7 +86,7 @@
   setAddressInput();
 
   var addSuccessMessage = function () {
-    var successTemplate = simillarSuccessTemplate.cloneNode(true);
+    var successTemplate = similarSuccessTemplate.cloneNode(true);
     main.insertAdjacentElement('afterbegin', successTemplate);
   };
 
@@ -96,6 +96,7 @@
     onSuccessFormMessage();
     window.map.deletePinsAndAdverts();
     setAddressInput();
+    window.loadPhoto.resetPhotosForm();
     mapPinMain.style.left = window.pin.MAIN_PIN_XCOORD + 'px';
     mapPinMain.style.top = window.pin.MAIN_PIN_YCOORD + 'px';
 
@@ -104,7 +105,7 @@
   };
 
   var addErrorMessage = function (errorMessage) {
-    var errorTemplate = simillarErrorTemplate.cloneNode(true);
+    var errorTemplate = similarErrorTemplate.cloneNode(true);
     errorTemplate.querySelector('.error__message').textContent = errorMessage;
     main.insertAdjacentElement('afterbegin', errorTemplate);
   };
@@ -182,6 +183,7 @@
   var onResetForm = function () {
     buttonReset.addEventListener('click', function () {
       window.activeMode.getDisableMode();
+      window.loadPhoto.resetPhotosForm();
       window.map.deletePinsAndAdverts();
       mapPin.appendChild(mapPinMain);
       mapPinMain.focus();

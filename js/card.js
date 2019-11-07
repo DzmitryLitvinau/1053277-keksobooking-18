@@ -1,8 +1,7 @@
 'use strict';
 
 (function () {
-  var fragmentPhoto = document.createDocumentFragment();
-  var fragmentFeature = document.createDocumentFragment();
+  // var fragment = document.createDocumentFragment();
   var similarAdvertTemplate = document.querySelector('#card')
     .content
     .querySelector('.map__card');
@@ -25,28 +24,29 @@
       advertElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
       var mainFeatures = advertElement.querySelector('.popup__features');
       var randomFeatures = advertElement.querySelectorAll('.popup__feature');
+      var fragment = document.createDocumentFragment();
       for (var element in advert.offer.features) {
         if (advert.offer.features) {
           var featureElement = advert.offer.features[element];
-          randomFeatures.forEach(function (feature) {
-            feature.remove();
+          randomFeatures.forEach(function (elem) {
+            elem.remove();
           });
           var popupFeature = document.createElement('li');
           popupFeature.className = 'popup__feature popup__feature--' + featureElement;
-          fragmentFeature.appendChild(popupFeature);
+          fragment.appendChild(popupFeature);
         }
       }
-      mainFeatures.appendChild(fragmentFeature);
+      mainFeatures.appendChild(fragment);
       advertElement.querySelector('.popup__description').textContent = advert.offer.description;
       advertElement.querySelector('.popup__photo').src = advert.offer.photos[0];
       var mainPhotos = advertElement.querySelector('.popup__photos');
       var randomPhoto = advertElement.querySelector('.popup__photo');
       for (var j = 1; j < advert.offer.photos.length; j++) {
         var randomPhotoClone = randomPhoto.cloneNode(true);
-        fragmentPhoto.appendChild(randomPhotoClone);
+        fragment.appendChild(randomPhotoClone);
         randomPhotoClone.src = advert.offer.photos[j];
       }
-      mainPhotos.appendChild(fragmentPhoto);
+      mainPhotos.appendChild(fragment);
       return advertElement;
     },
   };
