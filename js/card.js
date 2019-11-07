@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  // var fragment = document.createDocumentFragment();
   var similarAdvertTemplate = document.querySelector('#card')
     .content
     .querySelector('.map__card');
