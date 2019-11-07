@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var fragment = document.createDocumentFragment();
+  // var fragment = document.createDocumentFragment();
   var similarAdvertTemplate = document.querySelector('#card')
     .content
     .querySelector('.map__card');
@@ -24,6 +24,7 @@
       advertElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
       var mainFeatures = advertElement.querySelector('.popup__features');
       var randomFeatures = advertElement.querySelectorAll('.popup__feature');
+      var fragment = document.createDocumentFragment();
       for (var element in advert.offer.features) {
         if (advert.offer.features) {
           var featureElement = advert.offer.features[element];
