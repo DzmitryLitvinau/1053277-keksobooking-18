@@ -20,12 +20,12 @@
     });
   };
 
-  var closeAdvertPopup = function (evt) {
-    evt.parentElement.classList.add('hidden');
+  var closeAdvertPopup = function (element) {
+    element.parentElement.classList.add('hidden');
   };
 
-  var onAdvertPopupEscPress = function (event) {
-    window.util.isEscEvent(event, hideAdverts);
+  var onAdvertPopupEscPress = function (evt) {
+    window.util.isEscEvent(evt, hideAdverts);
   };
 
   var onClickAdvertPopupClose = function () {

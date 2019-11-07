@@ -33,9 +33,9 @@
 
   chooseImg(imageChooserAvatar, addPhotoAvatar);
 
-  var accomodationImageChooser = document.querySelector('.ad-form__upload input[type=file]');
-  var accomodationFormPhotoContainer = document.querySelector('.ad-form__photo-container');
-  var accomodationPhoto = document.querySelector('.ad-form__photo');
+  var accommodationImageChooser = document.querySelector('.ad-form__upload input[type=file]');
+  var accommodationFormPhotoContainer = document.querySelector('.ad-form__photo-container');
+  var accommodationPhoto = document.querySelector('.ad-form__photo');
   var fragment = document.createDocumentFragment();
 
   var similarPhotoTemplate = document.querySelector('#card')
@@ -45,30 +45,30 @@
   var renderAccomodationPhoto = function (readerResult) {
     var photoElement = similarPhotoTemplate.cloneNode(true);
     photoElement.src = readerResult;
-    var photoAccomodationClone = accomodationPhoto.cloneNode(true);
-    if (accomodationPhoto) {
-      accomodationPhoto.remove();
+    var accommodationPhotoClone = accommodationPhoto.cloneNode(true);
+    if (accommodationPhoto) {
+      accommodationPhoto.remove();
     }
-    window.util.setAttributes(photoAccomodationClone, {
+    window.util.setAttributes(accommodationPhotoClone, {
       'style': 'display:flex; justify-content: center; align-items: center',
     });
-    photoAccomodationClone.appendChild(photoElement);
-    fragment.appendChild(photoAccomodationClone);
-    accomodationFormPhotoContainer.appendChild(fragment);
+    accommodationPhotoClone.appendChild(photoElement);
+    fragment.appendChild(accommodationPhotoClone);
+    accommodationFormPhotoContainer.appendChild(fragment);
   };
 
-  chooseImg(accomodationImageChooser, renderAccomodationPhoto);
+  chooseImg(accommodationImageChooser, renderAccomodationPhoto);
 
   window.loadPhoto = {
     resetPhotosForm: function () {
       previewAvatar.src = defaultAvatar;
-      var photosAccomodation = accomodationFormPhotoContainer.querySelectorAll('.ad-form__photo');
-      photosAccomodation.forEach(function (element) {
+      var accommodationPhotos = accommodationFormPhotoContainer.querySelectorAll('.ad-form__photo');
+      accommodationPhotos.forEach(function (element) {
         if ((element.classList.contains('ad-form__photo'))) {
           element.remove();
         }
       });
-      accomodationFormPhotoContainer.appendChild(accomodationPhoto);
+      accommodationFormPhotoContainer.appendChild(accommodationPhoto);
     },
   };
 })();
