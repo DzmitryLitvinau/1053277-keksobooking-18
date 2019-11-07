@@ -96,6 +96,7 @@
     onSuccessFormMessage();
     window.map.deletePinsAndAdverts();
     setAddressInput();
+    window.loadPhoto.resetPhotosForm();
     mapPinMain.style.left = window.pin.MAIN_PIN_XCOORD + 'px';
     mapPinMain.style.top = window.pin.MAIN_PIN_YCOORD + 'px';
 
