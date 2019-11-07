@@ -182,6 +182,7 @@
   var onResetForm = function () {
     buttonReset.addEventListener('click', function () {
       window.activeMode.getDisableMode();
+      window.loadPhoto.resetPhotosForm();
       window.map.deletePinsAndAdverts();
       mapPin.appendChild(mapPinMain);
       mapPinMain.focus();
